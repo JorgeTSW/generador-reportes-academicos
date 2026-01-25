@@ -154,13 +154,24 @@ Sistema completo para cumplir con políticas de integridad académica.
 
 ```
 generador-reportes-academicos/
-├── index.html              # Aplicación principal
-├── CSS/
-│   └── style.css          # Estilos con temas
-├── JS/
-│   └── script.js          # Lógica de la aplicación
-└── ASSETS/
-    └── favicon.png        # Icono
+├── ASSETS
+│   └── favicon.png
+├── Contributing.md
+├── CSS
+│   └── style.css		# Estilos con temas
+├── DOCS
+├── EXAMPLES			# Carpeta con ejemplos de documentos generados
+│   ├── EJEMPLO.pdf
+│   └── EJEMPLO.txt
+├── index.html			# Aplicación principal
+├── JS
+│   └── script.js		# Lógica de la aplicación
+├── LICENSE
+├── README.md
+└── SCREENSHOTS			# Carpeta con Screenshots
+    ├── S1.png
+    ├── S2.png
+    └── S3.png
 ```
 
 ---
