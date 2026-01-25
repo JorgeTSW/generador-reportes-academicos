@@ -238,7 +238,7 @@ Las contribuciones son bienvenidas.
 4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
 5. Abre un Pull Request
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
+Ver [Contributing.md](Contributing.md) para más detalles.
 
 ---
 
