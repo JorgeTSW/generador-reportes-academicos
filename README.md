@@ -34,8 +34,14 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 ## Capturas de Pantalla
 
 ### Interfaz Principal
+
+#### Tema 1
 ![Interfaz tema 1]( ./SCREENSHOTS/S1.png )
+
+#### Tema 2
 ![Interfaz tema 2]( ./SCREENSHOTS/S2.png )
+
+#### Tema 3
 ![Interfaz tema 3]( ./SCREENSHOTS/S3.png )
 
 ---
