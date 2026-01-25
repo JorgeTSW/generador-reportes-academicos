@@ -191,13 +191,11 @@ generador-reportes-academicos/
 
 ### Navegadores:
 - Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
 
 ### Dispositivos:
 - Desktop (óptimo)
 - Tablet
-- Móvil (funcional, scroll en tablas anchas)
+- Móvil (funcional, pero tiene bugs visuales)
 
 ---
 
@@ -216,12 +214,6 @@ generador-reportes-academicos/
 - Manuales
 
 ---
-
-## Documentación Adicional
-
-- [Guía de Tablas](docs/GUIA_TABLAS.md)
-- [Personalización de IA](docs/GUIA_PERSONALIZACION_IA.md)
-- [Ajustes de Impresión](docs/AJUSTES_IMPRESION_IA.md)
 
 ---
 
@@ -256,8 +248,9 @@ Este proyecto fue desarrollado con asistencia de herramientas de inteligencia ar
 ### Proceso de Desarrollo:
 
 1. **Estructura Básica (Sin IA)**
+   - Idea original
    - HTML base sin estilos CSS
-   - Funcionalidades básicas del generador
+   - Funcionalidades básicas JS del generador
    - Estructura de archivos y organización inicial
 
 2. **Complejización de la Lógica (Claude Sonnet 4.5)**
@@ -269,7 +262,7 @@ Este proyecto fue desarrollado con asistencia de herramientas de inteligencia ar
 
 3. **Personalización y Debug de CSS (Gemini 2.0 Flash)**
    - Sistema de temas institucionales
-   - Estilos responsive
+   - Estilos responsive\*
    - Optimización de tablas académicas
    - Corrección de bugs visuales
    - Ajustes de impresión
@@ -318,14 +311,13 @@ Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detal
 
 ### Versión 1.1 (Próximamente)
 - [ ] Más temas institucionales
-- [ ] Exportación a DOCX
 - [ ] Plantillas predefinidas
 - [ ] Modo oscuro
 
 ### Versión 2.0 (Futuro)
 - [ ] Editor colaborativo
+- [ ] Cargar archivos
 - [ ] Integración con Google Drive
-- [ ] Versión móvil mejorada
 
 ---
 
