@@ -34,13 +34,9 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 ## Capturas de Pantalla
 
 ### Interfaz Principal
-![Interfaz](https://via.placeholder.com/800x400?text=Captura+de+Interfaz)
-
-### Sistema de Tablas
-![Tablas](https://via.placeholder.com/800x400?text=Tablas+Academicas)
-
-### Declaración de IA
-![IA](https://via.placeholder.com/800x400?text=Declaracion+IA)
+![Interfaz tema 1]( ./SCREENSHOTS/S1.png )
+![Interfaz tema 2]( ./SCREENSHOTS/S2.png )
+![Interfaz tema 3]( ./SCREENSHOTS/S3.png )
 
 ---
 
@@ -212,8 +208,6 @@ generador-reportes-academicos/
 - Reportes de análisis
 - Especificaciones
 - Manuales
-
----
 
 ---
 
