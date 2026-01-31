@@ -2,7 +2,7 @@
 
 > Herramienta web profesional para crear reportes académicos con vista previa en tiempo real
 
-![Versión](https://img.shields.io/badge/versión-1.0.3-blue)
+![Versión](https://img.shields.io/badge/versión-2.0.0-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 ![Estado](https://img.shields.io/badge/estado-activo-success)
 
@@ -14,14 +14,38 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 
 ### Características Principales
 
+- **Guardar y Cargar Proyectos**: Sistema completo para guardar trabajo en JSON y continuarlo después
 - **9 Tipos de Bloques**: Encabezado, Título, Subtítulo, Párrafo, Código, Imagen, Tabla, Referencia, Declaración IA
 - **3 Temas Institucionales**: TSW, UPY, UPP con paletas personalizadas
 - **Tablas Profesionales**: Grid visual de 1-6 columnas con diseño académico
 - **Declaración de IA**: Sistema completo para documentar uso de herramientas de IA
-- **Exportación Dual**: PDF (impresión) y TXT
+- **Exportación Triple**: PDF (impresión), TXT y JSON (proyecto completo)
 - **Seguro**: Protección XSS completa
 - **Responsive**: Funciona en desktop, tablet y móvil
 - **Sin Backend**: Todo en el navegador, sin servidor
+
+---
+
+## Guardar y Cargar Proyectos
+
+### Funcionalidad de Persistencia:
+- **Guardar Proyecto**: Exporta el trabajo completo como archivo JSON
+- **Cargar Proyecto**: Restaura proyectos guardados previamente
+- **Formato**: JSON con todos los bloques, tema y metadatos
+- **Nombre automático**: `reporte_YYYY-MM-DD_HH-MM.json`
+
+### Casos de Uso:
+- **Trabajo en múltiples sesiones**: Guarda y continúa después
+- **Respaldo**: Mantén versiones de tu trabajo
+- **Colaboración**: Comparte proyectos con compañeros
+- **Recuperación**: No pierdas datos si se cierra el navegador
+
+### Características:
+- Validación de archivos JSON
+- Confirmación antes de sobrescribir trabajo actual
+- Restauración completa de bloques y tema
+- Manejo robusto de errores
+- Timestamp automático
 
 ---
 
@@ -101,6 +125,8 @@ Click en los botones de la barra lateral:
 ### 3. Exportar
 - **Imprimir PDF** - Ctrl+P
 - **Guardar TXT** - Botón "Guardar TXT"
+- **Guardar Proyecto** - Botón "Guardar Proyecto" (JSON)
+- **Cargar Proyecto** - Botón "Cargar Proyecto" (JSON)
 
 ---
 
@@ -320,15 +346,15 @@ Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detal
 
 ## Roadmap
 
-### Versión 1.1 (Próximamente)
-- [ ] Más temas institucionales
-- [ ] Plantillas predefinidas
-- [ ] Modo oscuro
+### Versión 2.0.0 (Actual)
+- [x] Sistema de guardar/cargar proyectos en JSON
+- [x] Persistencia completa del estado
+- [x] Validación y manejo de errores robusto
 
-### Versión 2.0 (Futuro)
-- [ ] Editor colaborativo
-- [ ] Cargar archivos
-- [ ] Integración con Google Drive
+### Versión 3.0 (Futuro)
+- [ ] Sincronización con Google Drive
+- [ ] Editor colaborativo en tiempo real
+- [ ] Sistema de versiones integrado
 
 ---
 
