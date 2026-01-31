@@ -847,3 +847,44 @@ textarea.editor-input {
         min-width: 50px;
     }
 }
+
+
+/* ============================================================================
+   DRAG & DROP - REORDENAR BLOQUES
+   ============================================================================ */
+
+.block-card-container {
+    cursor: move;
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+.block-card-container:active {
+    cursor: grabbing;
+}
+
+.block-card-container.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+    cursor: grabbing;
+}
+
+.block-card-container.drag-over {
+    border-top: 3px solid var(--secondary);
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+@keyframes dropAnimation {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
