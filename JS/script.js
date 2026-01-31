@@ -1072,7 +1072,7 @@ function saveJSON() {
     try {
         // Crear objeto con todos los datos del proyecto
         const projectData = {
-            version: '1.0.4',
+            version: '2.0',
             timestamp: new Date().toISOString(),
             theme: document.body.getAttribute('data-theme') || 'tsw',
             reportData: reportData
@@ -1088,7 +1088,7 @@ function saveJSON() {
         const now = new Date();
         const dateStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
         const timeStr = now.toTimeString().slice(0, 5).replace(':', '-'); // HH-MM
-        const filename = `reporte_${dateStr}_${timeStr}.json`;
+        const filename = `reporte-FECHA-${dateStr}-HORA-${timeStr}.json`;
 
         // Crear enlace de descarga
         const link = document.createElement('a');
