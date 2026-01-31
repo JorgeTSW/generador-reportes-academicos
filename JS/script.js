@@ -1089,7 +1089,7 @@ function saveJSON() {
         const now = new Date();
         const dateStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
         const timeStr = now.toTimeString().slice(0, 5).replace(':', '-'); // HH-MM
-        const filename = `reporte-FECHA-${dateStr}-HORA-${timeStr}.json`;
+        const filename = `REPORTE-FECHA-${dateStr}-HORA-${timeStr}.json`;
 
         // Crear enlace de descarga
         const link = document.createElement('a');
