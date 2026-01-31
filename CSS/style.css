@@ -117,6 +117,15 @@ body {
     transform: translateX(5px) !important;
 }
 
+.btn-json {
+    background: #27ae60 !important;
+    font-weight: 600;
+}
+
+.btn-json:hover {
+    background: #229954 !important;
+}
+
 .btn-save,
 .btn-print {
     background: var(--secondary) !important;

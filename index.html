@@ -68,6 +68,19 @@
                 <span class="material-symbols-outlined">smart_toy</span>
                 <span>&ensp;Declaración IA</span>
             </button>
+
+			<hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 15px 0;">
+
+            <button class="btn-json" onclick="saveJSON()">
+                <span class="material-symbols-outlined">cloud_download</span>
+                <span>&ensp;Guardar Proyecto</span>
+            </button>
+
+            <button class="btn-json" onclick="document.getElementById('loadJSONInput').click()">
+                <span class="material-symbols-outlined">cloud_upload</span>
+                <span>&ensp;Cargar Proyecto</span>
+            </button>
+            <input type="file" id="loadJSONInput" accept=".json" onchange="loadJSON(this)" style="display: none;">
             
             <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 15px 0;">
             

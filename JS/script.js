@@ -1059,3 +1059,149 @@ function loadSavedTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     loadSavedTheme();
 });
+
+// ============================================================================
+// GUARDAR Y CARGAR PROYECTO (JSON)
+// ============================================================================
+
+/**
+ * Guarda el proyecto completo como archivo JSON
+ * Permite al usuario descargar su trabajo y continuarlo después
+ */
+function saveJSON() {
+    try {
+        // Crear objeto con todos los datos del proyecto
+        const projectData = {
+            version: '1.0.4',
+            timestamp: new Date().toISOString(),
+            theme: document.body.getAttribute('data-theme') || 'tsw',
+            reportData: reportData
+        };
+
+        // Convertir a JSON con formato legible
+        const jsonString = JSON.stringify(projectData, null, 2);
+
+        // Crear Blob
+        const blob = new Blob([jsonString], { type: 'application/json' });
+
+        // Crear nombre de archivo con fecha y hora
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+        const timeStr = now.toTimeString().slice(0, 5).replace(':', '-'); // HH-MM
+        const filename = `reporte_${dateStr}_${timeStr}.json`;
+
+        // Crear enlace de descarga
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+
+        // Simular click para descargar
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Liberar memoria
+        URL.revokeObjectURL(link.href);
+
+        console.log('Proyecto guardado:', filename);
+        alert('Proyecto guardado exitosamente como ' + filename);
+
+    } catch (error) {
+        console.error('Error al guardar proyecto:', error);
+        alert('Error al guardar el proyecto. Por favor intenta de nuevo.');
+    }
+}
+
+/**
+ * Carga un proyecto desde un archivo JSON
+ * @param {HTMLInputElement} input - Input file que contiene el JSON
+ */
+function loadJSON(input) {
+    const file = input.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    // Verificar que sea un archivo JSON
+    if (!file.name.endsWith('.json')) {
+        alert('Por favor selecciona un archivo JSON válido.');
+        input.value = ''; // Limpiar input
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        try {
+            // Parsear JSON
+            const projectData = JSON.parse(e.target.result);
+
+            // Validar estructura básica
+            if (!projectData.reportData || !Array.isArray(projectData.reportData)) {
+                throw new Error('Formato de archivo inválido');
+            }
+
+            // Confirmar carga (advertir que se perderá el trabajo actual)
+            const hasCurrentData = reportData.length > 0;
+            if (hasCurrentData) {
+                const confirm = window.confirm(
+                    '¿Estás seguro de cargar este proyecto?\n\n' +
+                    'Se perderá el trabajo actual no guardado.\n\n' +
+                    'Recomendación: Guarda tu proyecto actual antes de continuar.'
+                );
+
+                if (!confirm) {
+                    input.value = ''; // Limpiar input
+                    return;
+                }
+            }
+
+            // Cargar datos
+            reportData = projectData.reportData;
+
+            // Cargar tema si está disponible
+            if (projectData.theme) {
+                changeTheme(projectData.theme);
+                const selector = document.getElementById('themeSelector');
+                if (selector) {
+                    selector.value = projectData.theme;
+                }
+            }
+
+            // Renderizar
+            render();
+
+            // Limpiar input para permitir cargar el mismo archivo de nuevo
+            input.value = '';
+
+            console.log('Proyecto cargado exitosamente');
+            console.log('- Versión:', projectData.version);
+            console.log('- Fecha guardado:', projectData.timestamp);
+            console.log('- Bloques cargados:', reportData.length);
+
+            alert(
+                'Proyecto cargado exitosamente\n\n' +
+                `Bloques: ${reportData.length}\n` +
+                `Tema: ${projectData.theme || 'tsw'}`
+            );
+
+        } catch (error) {
+            console.error('Error al cargar proyecto:', error);
+            alert(
+                'Error al cargar el proyecto\n\n' +
+                'El archivo puede estar corrupto o tener un formato incorrecto.\n\n' +
+                'Error: ' + error.message
+            );
+            input.value = ''; // Limpiar input
+        }
+    };
+
+    reader.onerror = function() {
+        alert('Error al leer el archivo. Por favor intenta de nuevo.');
+        input.value = ''; // Limpiar input
+    };
+
+    // Leer archivo como texto
+    reader.readAsText(file);
+}
