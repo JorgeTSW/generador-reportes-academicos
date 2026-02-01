@@ -57,14 +57,13 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 
 ## Capturas de Pantalla
 
-### Drag \& Drop feature
+### Drag & Drop Feature
 
-<center>
-<video width="100%" autoplay loop muted>
-      <source src="./SCREENSHOTS/Drag-Drop-Feature.mp4" type="video/mp4">
-</video>
-</center>
+![Drag and Drop](./SCREENSHOTS/Drag-Drop-Feature.gif)
 
+### Save & Load Feature
+
+![Drag and Drop](./SCREENSHOTS/Save-Load-Feature.gif)
 
 ---
 
