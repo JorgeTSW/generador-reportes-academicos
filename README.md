@@ -2,7 +2,7 @@
 
 > Herramienta web profesional para crear reportes académicos con vista previa en tiempo real
 
-![Versión](https://img.shields.io/badge/versión-2.1.0-blue)
+![Versión](https://img.shields.io/badge/versión-2.2.0-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 ![Estado](https://img.shields.io/badge/estado-activo-success)
 
@@ -78,6 +78,49 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 - Validación de estructura de datos
 - Manejo robusto de errores de almacenamiento
 - Compatible con caché de temas
+
+### Monitoreo de Actividad del Estudiante:
+El JSON exportado ahora incluye un campo `autoSaveActivity` con:
+- **totalAutoSaves**: Número total de auto-guardados en la sesión
+- **timestamps**: Lista completa de timestamps (ISO 8601)
+- **firstSave**: Primer auto-guardado (inicio de trabajo)
+- **lastSave**: Último auto-guardado (fin de trabajo)
+
+**Ejemplo de uso para docentes/administradores:**
+```json
+{
+  "version": "2.1",
+  "timestamp": "2026-09-01T10:30:45.123Z",
+  "theme": "tsw",
+  "reportData": [...],
+  "autoSaveActivity": {
+    "totalAutoSaves": 42,
+    "timestamps": [
+      "2026-09-01T10:00:15.456Z",
+      "2026-09-01T10:00:25.789Z",
+      "2026-09-01T10:00:35.012Z",
+      ...
+    ],
+    "firstSave": "2026-09-01T10:00:15.456Z",
+    "lastSave": "2026-09-01T10:35:42.789Z"
+  }
+}
+```
+
+**Uso programático:**
+```javascript
+// En la consola del navegador
+const stats = getAutoSaveStats();
+console.log(stats);
+// Retorna:
+// {
+//   totalAutoSaves: 42,
+//   firstSave: "2026-09-01T10:00:15.456Z",
+//   lastSave: "2026-09-01T10:35:42.789Z",
+//   sessionDurationMinutes: 35,
+//   averageSaveIntervalSeconds: 10
+// }
+```
 
 ---
 
@@ -380,18 +423,26 @@ Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detal
 - [x] Persistencia completa del estado
 - [x] Validación y manejo de errores robusto
 
-### Versión 2.1.0 ✓ Completada (Actual)
+### Versión 2.1.0 ✓ Completada
 - [x] Auto-guardado automático cada 10 segundos
 - [x] Recuperación automática de última sesión
 - [x] Caching inteligente de tema y datos
 - [x] Indicador visual de guardado
 - [x] Validación robusta de datos en caché
 
+### Versión 2.2.0 ✓ Completada (Actual)
+- [x] Registro de timestamps de auto-guardado
+- [x] Monitoreo de actividad del estudiante
+- [x] Estadísticas en JSON exportado (totalSaves, firstSave, lastSave)
+- [x] Función getAutoSaveStats() para análisis
+- [x] Indicador visual muestra número de saves
+
 ### Versión 3.0 (Futuro)
 - [ ] Sincronización con Google Drive
 - [ ] Editor colaborativo en tiempo real
 - [ ] Sistema de versiones integrado
 - [ ] Búsqueda en proyectos guardados
+- [ ] Dashboard de análisis de actividad
 
 ---
 
