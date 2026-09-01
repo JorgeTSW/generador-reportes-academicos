@@ -37,6 +37,32 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+/**
+ * Desactiva copiar y pegar en elementos específicos
+ * Previene Ctrl+C, Ctrl+V, Ctrl+X y eventos de clipboard
+ * @param {string} selector - Selector CSS de los elementos
+ */
+function disableCopyPaste(selector) {
+    const elements = document.querySelectorAll(selector);
+
+    elements.forEach(el => {
+        // Prevenir eventos de clipboard
+        el.addEventListener('copy', (e) => e.preventDefault());
+        el.addEventListener('cut', (e) => e.preventDefault());
+        el.addEventListener('paste', (e) => e.preventDefault());
+
+        // Prevenir atajos de teclado
+        el.addEventListener('keydown', (e) => {
+            // Ctrl+C, Ctrl+X, Ctrl+V (también Cmd+C, Cmd+X, Cmd+V en Mac)
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C' || e.key === 'x' || e.key === 'X' || e.key === 'v' || e.key === 'V')) {
+                e.preventDefault();
+                // Opcional: mostrar mensaje al usuario
+                console.log('Copiar y pegar está deshabilitado en este campo');
+            }
+        });
+    });
+}
+
 // ============================================================================
 // FUNCIONES DE GESTIÓN DE BLOQUES
 // ============================================================================
@@ -349,6 +375,9 @@ function render() {
     renderEditor();
     renderPreview();
 	initializeDragAndDrop();
+
+    // Desactivar copiar/pegar en inputs y textareas, excepto en bloques de IA
+    disableCopyPaste('input:not([data-allow-paste]), textarea:not([data-allow-paste])');
 }
 
 /**
@@ -609,20 +638,20 @@ function renderAIEditor(block, deleteBtn) {
                         oninput="updateAI(${block.id}, 'name', this.value)">
                 </div>
             ` : ''}
-            
+
             ${block.aiUsed === 'yes' ? `
                 <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 5px;">
-            
+
                     <p style="margin: 0 0 10px 0; font-size: 0.9em; color: #555;">
                         <strong>Completa los siguientes campos para cada uso de IA:</strong>
                     </p>
-                    <input type="text" class="editor-input" placeholder="Nombre del estudiante" value="${escapeAttr(ai.name)}" oninput="updateAI(${block.id}, 'name', this.value)">
-                    <input type="text" class="editor-input" placeholder="IA utilizada (ej. ChatGPT, Claude, Gemini)" value="${escapeAttr(ai.aiTool)}" oninput="updateAI(${block.id}, 'aiTool', this.value)">
-                    <input type="date" class="editor-input" placeholder="Fecha de uso" value="${escapeAttr(ai.date)}" oninput="updateAI(${block.id}, 'date', this.value)">
-                    <input type="text" class="editor-input" placeholder="Propósito (ej. depuración, investigación, redacción)" value="${escapeAttr(ai.purpose)}" oninput="updateAI(${block.id}, 'purpose', this.value)">
-                    <textarea class="editor-input" placeholder="Prompt utilizado" oninput="updateAI(${block.id}, 'prompt', this.value)">${escapeHtml(ai.prompt)}</textarea>
-                    <input type="text" class="editor-input" placeholder="Archivos adjuntos suministrados (ej. reporte.docx, libro.pdf, www.link.com)" value="${escapeAttr(ai.attachments)}" oninput="updateAI(${block.id}, 'attachments', this.value)">
-                    <textarea class="editor-input" placeholder="Respuesta en crudo (raw response)" style="min-height: 120px;" oninput="updateAI(${block.id}, 'rawResponse', this.value)">${escapeHtml(ai.rawResponse)}</textarea>
+                    <input type="text" class="editor-input" placeholder="Nombre del estudiante" value="${escapeAttr(ai.name)}" oninput="updateAI(${block.id}, 'name', this.value)" data-allow-paste>
+                    <input type="text" class="editor-input" placeholder="IA utilizada (ej. ChatGPT, Claude, Gemini)" value="${escapeAttr(ai.aiTool)}" oninput="updateAI(${block.id}, 'aiTool', this.value)" data-allow-paste>
+                    <input type="date" class="editor-input" placeholder="Fecha de uso" value="${escapeAttr(ai.date)}" oninput="updateAI(${block.id}, 'date', this.value)" data-allow-paste>
+                    <input type="text" class="editor-input" placeholder="Propósito (ej. depuración, investigación, redacción)" value="${escapeAttr(ai.purpose)}" oninput="updateAI(${block.id}, 'purpose', this.value)" data-allow-paste>
+                    <textarea class="editor-input" placeholder="Prompt utilizado" oninput="updateAI(${block.id}, 'prompt', this.value)" data-allow-paste>${escapeHtml(ai.prompt)}</textarea>
+                    <input type="text" class="editor-input" placeholder="Archivos adjuntos suministrados (ej. reporte.docx, libro.pdf, www.link.com)" value="${escapeAttr(ai.attachments)}" oninput="updateAI(${block.id}, 'attachments', this.value)" data-allow-paste>
+                    <textarea class="editor-input" placeholder="Respuesta en crudo (raw response)" style="min-height: 120px;" oninput="updateAI(${block.id}, 'rawResponse', this.value)" data-allow-paste>${escapeHtml(ai.rawResponse)}</textarea>
                 </div>
             ` : ''}
         </div>`;
