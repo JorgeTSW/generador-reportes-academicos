@@ -2,7 +2,7 @@
 
 > Herramienta web profesional para crear reportes académicos con vista previa en tiempo real
 
-![Versión](https://img.shields.io/badge/versión-2.0.0-blue)
+![Versión](https://img.shields.io/badge/versión-2.1.0-blue)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 ![Estado](https://img.shields.io/badge/estado-activo-success)
 
@@ -14,6 +14,8 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 
 ### Características Principales
 
+- **Auto-guardado Automático**: Guarda tu trabajo cada 10 segundos sin interrupciones
+- **Caching Inteligente**: Recupera automáticamente tu último proyecto al abrir la app
 - **Guardar y Cargar Proyectos**: Sistema completo para guardar trabajo en JSON y continuarlo después
 - **9 Tipos de Bloques**: Encabezado, Título, Subtítulo, Párrafo, Código, Imagen, Tabla, Referencia, Declaración IA
 - **3 Temas Institucionales**: TSW, UPY, UPP con paletas personalizadas
@@ -46,6 +48,36 @@ Aplicación web 100% cliente para generar documentos académicos profesionales c
 - Restauración completa de bloques y tema
 - Manejo robusto de errores
 - Timestamp automático
+
+---
+
+## Auto-guardado y Caching
+
+### Funcionalidad de Persistencia Automática:
+- **Auto-guardado**: Guarda automáticamente cada 10 segundos en localStorage
+- **Recuperación Automática**: Restaura tu trabajo al recargar la página
+- **Caché Inteligente**: Almacena bloques + tema + timestamp
+- **Indicador Visual**: Muestra estado de guardado en la barra lateral
+- **Sin Configuración**: Funciona automáticamente sin intervención del usuario
+
+### Cómo Funciona:
+1. **Mientras trabajas** → Auto-guarda cada 10 segundos
+2. **Indicador visual** → Muestra "○ Guardando..." y "✓ Guardado" cada 10 segundos
+3. **Cierra el navegador** → Datos seguros en localStorage
+4. **Reabre la app** → Recupera automáticamente tu último trabajo
+
+### Casos de Uso:
+- **Sesiones interrumpidas**: Recupera tu trabajo sin perder nada
+- **Navegación accidental**: Si cambias de pestaña, todo se guarda
+- **Respaldo local**: Datos guardados en tu dispositivo
+- **Sin descarga manual**: No necesitas descargar archivos constantemente
+
+### Características Técnicas:
+- Intervalo configurable de guardado (actualmente 10 segundos)
+- Almacenamiento en localStorage del navegador
+- Validación de estructura de datos
+- Manejo robusto de errores de almacenamiento
+- Compatible con caché de temas
 
 ---
 
@@ -343,15 +375,23 @@ Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detal
 
 ## Roadmap
 
-### Versión 2.0.0 (Actual)
+### Versión 2.0.0 ✓ Completada
 - [x] Sistema de guardar/cargar proyectos en JSON
 - [x] Persistencia completa del estado
 - [x] Validación y manejo de errores robusto
+
+### Versión 2.1.0 ✓ Completada (Actual)
+- [x] Auto-guardado automático cada 10 segundos
+- [x] Recuperación automática de última sesión
+- [x] Caching inteligente de tema y datos
+- [x] Indicador visual de guardado
+- [x] Validación robusta de datos en caché
 
 ### Versión 3.0 (Futuro)
 - [ ] Sincronización con Google Drive
 - [ ] Editor colaborativo en tiempo real
 - [ ] Sistema de versiones integrado
+- [ ] Búsqueda en proyectos guardados
 
 ---
 
