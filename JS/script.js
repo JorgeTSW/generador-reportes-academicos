@@ -4,6 +4,7 @@
 
 // Estado global de la aplicación
 let reportData = [];
+let autoSaveTimestamps = []; // Registro de timestamps de auto-guardado
 
 // ============================================================================
 // FUNCIONES DE SEGURIDAD (NUEVAS)
@@ -995,12 +996,17 @@ function formatIEEEReference(type, author, title, source, year, url) {
  */
 function saveToLocalStorage() {
     try {
+        const currentTimestamp = new Date().toISOString();
         const cacheData = {
-            timestamp: new Date().toISOString(),
+            timestamp: currentTimestamp,
             theme: document.body.getAttribute('data-theme') || 'tsw',
             reportData: reportData
         };
         localStorage.setItem('reportData', JSON.stringify(cacheData));
+
+        // Registrar timestamp de auto-guardado
+        autoSaveTimestamps.push(currentTimestamp);
+
         updateAutoSaveIndicator();
         console.log('Reporte guardado automáticamente');
     } catch (e) {
@@ -1020,6 +1026,10 @@ function loadFromLocalStorage() {
             // Validar que sea un objeto con reportData
             if (cacheData.reportData && Array.isArray(cacheData.reportData)) {
                 reportData = cacheData.reportData;
+
+                // Resetear timestamps de auto-save para nueva sesión
+                // (solo se persisten cuando se exporta a JSON manualmente)
+                autoSaveTimestamps = [];
 
                 // Cargar tema guardado
                 if (cacheData.theme) {
@@ -1046,13 +1056,40 @@ function updateAutoSaveIndicator() {
     if (!indicator) return;
 
     indicator.classList.add('saved');
-    indicator.innerHTML = '✓ Guardado';
+    indicator.innerHTML = `✓ Guardado (${autoSaveTimestamps.length})`;
 
     // Remover la clase después de 2 segundos
     setTimeout(() => {
         indicator.classList.remove('saved');
-        indicator.innerHTML = '○ Guardando...';
+        indicator.innerHTML = `○ Guardando... (${autoSaveTimestamps.length})`;
     }, 2000);
+}
+
+/**
+ * Obtiene estadísticas de actividad de auto-guardado
+ * Útil para monitoreo de estudiantes
+ */
+function getAutoSaveStats() {
+    if (autoSaveTimestamps.length === 0) {
+        return {
+            totalAutoSaves: 0,
+            sessionDuration: null,
+            stats: 'Sin auto-saves en esta sesión'
+        };
+    }
+
+    const firstTimestamp = new Date(autoSaveTimestamps[0]);
+    const lastTimestamp = new Date(autoSaveTimestamps[autoSaveTimestamps.length - 1]);
+    const durationMs = lastTimestamp - firstTimestamp;
+    const durationMinutes = Math.round(durationMs / 60000);
+
+    return {
+        totalAutoSaves: autoSaveTimestamps.length,
+        firstSave: autoSaveTimestamps[0],
+        lastSave: autoSaveTimestamps[autoSaveTimestamps.length - 1],
+        sessionDurationMinutes: durationMinutes,
+        averageSaveIntervalSeconds: Math.round(durationMs / (autoSaveTimestamps.length * 1000))
+    };
 }
 
 // ============================================================================
@@ -1110,10 +1147,16 @@ function saveJSON() {
     try {
         // Crear objeto con todos los datos del proyecto
         const projectData = {
-            version: '2.0',
+            version: '2.1',
             timestamp: new Date().toISOString(),
             theme: document.body.getAttribute('data-theme') || 'tsw',
-            reportData: reportData
+            reportData: reportData,
+            autoSaveActivity: {
+                totalAutoSaves: autoSaveTimestamps.length,
+                timestamps: autoSaveTimestamps,
+                firstSave: autoSaveTimestamps.length > 0 ? autoSaveTimestamps[0] : null,
+                lastSave: autoSaveTimestamps.length > 0 ? autoSaveTimestamps[autoSaveTimestamps.length - 1] : null
+            }
         };
 
         // Convertir a JSON con formato legible
@@ -1197,6 +1240,14 @@ function loadJSON(input) {
 
             // Cargar datos
             reportData = projectData.reportData;
+
+            // Cargar historial de auto-saves si está disponible
+            if (projectData.autoSaveActivity && projectData.autoSaveActivity.timestamps) {
+                autoSaveTimestamps = projectData.autoSaveActivity.timestamps;
+            } else {
+                // Resetear si no hay historial previo
+                autoSaveTimestamps = [];
+            }
 
             // Cargar tema si está disponible
             if (projectData.theme) {
