@@ -888,3 +888,16 @@ textarea.editor-input {
         opacity: 1;
     }
 }
+
+/* ============================================================================
+   AUTO-SAVE INDICATOR STYLES
+   ============================================================================ */
+#auto-save-indicator {
+    color: white;
+}
+
+#auto-save-indicator.saved {
+    background: rgba(76, 175, 80, 0.3) !important;
+    opacity: 1 !important;
+    border: 1px solid rgba(76, 175, 80, 0.5);
+}

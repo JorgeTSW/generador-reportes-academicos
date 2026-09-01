@@ -991,11 +991,17 @@ function formatIEEEReference(type, author, title, source, year, url) {
 }
 
 /**
- * Guarda el estado actual en localStorage (opcional)
+ * Guarda el estado actual en localStorage con timestamp
  */
 function saveToLocalStorage() {
     try {
-        localStorage.setItem('reportData', JSON.stringify(reportData));
+        const cacheData = {
+            timestamp: new Date().toISOString(),
+            theme: document.body.getAttribute('data-theme') || 'tsw',
+            reportData: reportData
+        };
+        localStorage.setItem('reportData', JSON.stringify(cacheData));
+        updateAutoSaveIndicator();
         console.log('Reporte guardado automáticamente');
     } catch (e) {
         console.error('Error al guardar en localStorage:', e);
@@ -1003,32 +1009,63 @@ function saveToLocalStorage() {
 }
 
 /**
- * Carga el estado desde localStorage (opcional)
+ * Carga el estado desde localStorage
  */
 function loadFromLocalStorage() {
     try {
         const saved = localStorage.getItem('reportData');
         if (saved) {
-            reportData = JSON.parse(saved);
-            render();
-            console.log('Reporte recuperado');
+            const cacheData = JSON.parse(saved);
+
+            // Validar que sea un objeto con reportData
+            if (cacheData.reportData && Array.isArray(cacheData.reportData)) {
+                reportData = cacheData.reportData;
+
+                // Cargar tema guardado
+                if (cacheData.theme) {
+                    changeTheme(cacheData.theme);
+                }
+
+                render();
+                console.log('Reporte recuperado desde caché');
+                console.log('Último guardado:', cacheData.timestamp);
+                return true;
+            }
         }
     } catch (e) {
         console.error('Error al cargar desde localStorage:', e);
     }
+    return false;
+}
+
+/**
+ * Actualiza el indicador visual de auto-guardado
+ */
+function updateAutoSaveIndicator() {
+    const indicator = document.getElementById('auto-save-indicator');
+    if (!indicator) return;
+
+    indicator.classList.add('saved');
+    indicator.innerHTML = '✓ Guardado';
+
+    // Remover la clase después de 2 segundos
+    setTimeout(() => {
+        indicator.classList.remove('saved');
+        indicator.innerHTML = '○ Guardando...';
+    }, 2000);
 }
 
 // ============================================================================
 // INICIALIZACIÓN
 // ============================================================================
 
-// Cargar datos guardados al iniciar (opcional - comentado por ahora)
-// document.addEventListener('DOMContentLoaded', function() {
-//     loadFromLocalStorage();
-// });
+// Cargar datos guardados al iniciar y configurar auto-save
+document.addEventListener('DOMContentLoaded', function() {
+    loadFromLocalStorage();
 
-// Autoguardado cada 30 segundos (opcional - comentado por ahora)
-// setInterval(saveToLocalStorage, 30000);
+    // Auto-guardado cada 10 segundos
+    setInterval(saveToLocalStorage, 10000);
+});
 
 // ============================================================================
 // GESTIÓN DE TEMAS
